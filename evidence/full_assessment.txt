@@ -1,0 +1,84 @@
+=== Complete System Verification ===
+
+1. API Endpoints Test
+
+Creating Tutorial:
+{"title":"Assessment Demo","description":"Testing for documentation","published":false,"createdAt":"2025-04-07T18:51:27.017Z","updatedAt":"2025-04-07T18:51:27.017Z","id":"67f41eaf16c5fcf6d8ccd8ed"}
+
+Listing Tutorials:
+[{"title":"Test Tutorial","description":"Testing the API","published":false,"createdAt":"2025-04-07T18:45:50.887Z","updatedAt":"2025-04-07T18:45:50.887Z","id":"67f41d5eb348b98bbd926de3"},{"title":"Test Tutorial 1","description":"First test tutorial","published":false,"createdAt":"2025-04-07T18:47:39.575Z","updatedAt":"2025-04-07T18:47:39.575Z","id":"67f41dcbb348b98bbd926de6"},{"title":"Documentation Test","description":"Testing for assessment documentation","published":false,"createdAt":"2025-04-07T18:50:25.896Z","updatedAt":"2025-04-07T18:50:25.896Z","id":"67f41e71b348b98bbd926dea"},{"title":"Assessment Demo","description":"Testing for documentation","published":false,"createdAt":"2025-04-07T18:51:27.017Z","updatedAt":"2025-04-07T18:51:27.017Z","id":"67f41eaf16c5fcf6d8ccd8ed"}]
+
+2. Container Status
+NAMES      STATUS          PORTS
+nginx      Up 28 seconds   0.0.0.0:80->80/tcp
+frontend   Up 28 seconds   0.0.0.0:4200->80/tcp
+backend    Up 28 seconds   0.0.0.0:8080->8080/tcp
+mongo      Up 28 seconds   0.0.0.0:27017->27017/tcp
+
+
+3. Network Configuration
+[
+    {
+        "Name": "crud-dd-task-mean-app_app-network",
+        "Id": "22a46aa2f77336fc2e8be0fa24ce877d81e83efc6877740cbd24311e1fafb01b",
+        "Created": "2025-04-07T18:50:57.930381554Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.18.0.0/16",
+                    "Gateway": "172.18.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "a31e6a2d2974aeb0c484ebf38aee05718128f339613e52a18078db877fa55a7c": {
+                "Name": "nginx",
+                "EndpointID": "80b8cac2e5207ce7a2c06b57b83189a3d61a00684beb6a30892fa614a89d1e52",
+                "MacAddress": "06:d1:4c:b7:ef:a7",
+                "IPv4Address": "172.18.0.5/16",
+                "IPv6Address": ""
+            },
+            "b084b47c4c1625b673e09202fa8937ce16bb03d08e5e12080f6a99ff3c4c4abf": {
+                "Name": "frontend",
+                "EndpointID": "c688d93d55386ff2c26424f8a0bc3ca97926a41c8610e337d854bf80eac433c7",
+                "MacAddress": "66:66:79:69:79:f7",
+                "IPv4Address": "172.18.0.4/16",
+                "IPv6Address": ""
+            },
+            "e7a6176f61decf28ca09703774efafb5adfe7854e7140c1a635c581a63f865ef": {
+                "Name": "mongo",
+                "EndpointID": "063f1716cb10a00241fbfbb8f7ecc38af6c406198c768d124ef11430c5cf1dde",
+                "MacAddress": "e6:dc:02:e7:d8:40",
+                "IPv4Address": "172.18.0.2/16",
+                "IPv6Address": ""
+            },
+            "e90c421cd410410e4f82c4a6738ff32245d5958dfa923f157d556c19666ce2e8": {
+                "Name": "backend",
+                "EndpointID": "c2ecdaf79888edae32409fabf3a407f61e449b60e5eeec0836ccc66ceb620f2d",
+                "MacAddress": "1e:bb:cb:e7:68:10",
+                "IPv4Address": "172.18.0.3/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {
+            "com.docker.compose.config-hash": "874d3add29e0dc228ba68d90ba4f8e2505ff971990543d5b1393a1e5a57d0b9c",
+            "com.docker.compose.network": "app-network",
+            "com.docker.compose.project": "crud-dd-task-mean-app",
+            "com.docker.compose.version": "2.34.0"
+        }
+    }
+]

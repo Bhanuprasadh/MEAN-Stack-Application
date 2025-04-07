@@ -1,17 +1,25 @@
-# MEAN Stack CRUD Application
+# MEAN Stack CRUD Application - Tutorials Management System
 
-A containerized MEAN (MongoDB, Express, Angular, Node.js) stack application with CI/CD pipeline integration.
+A containerized MEAN (MongoDB, Express, Angular, Node.js) stack application for managing tutorials with complete CRUD operations. This project was developed as part of an internship assessment.
 
 ## Project Overview
 
-This project is a full-stack CRUD (Create, Read, Update, Delete) application built with the MEAN stack:
+This project is a full-stack CRUD (Create, Read, Update, Delete) application for managing tutorials, built with the MEAN stack:
 
-- **MongoDB**: NoSQL database for data storage
-- **Express.js**: Backend web application framework
-- **Angular 15**: Frontend framework
-- **Node.js**: JavaScript runtime environment
+- **MongoDB**: NoSQL database for storing tutorial data
+- **Express.js**: Backend web application framework handling API requests
+- **Angular 15**: Frontend framework providing an interactive user interface
+- **Node.js**: JavaScript runtime environment for the backend server
 
-The application is containerized using Docker and includes a CI/CD pipeline with GitHub Actions for automated testing, building, and deployment.
+The application is containerized using Docker and Nginx as a reverse proxy, making it easy to deploy and scale.
+
+### Features
+
+- Create, retrieve, update, and delete tutorials
+- Mark tutorials as published/unpublished
+- Filter tutorials by title
+- View all published tutorials
+- Responsive user interface
 
 ### Architecture
 
@@ -32,13 +40,38 @@ The application is containerized using Docker and includes a CI/CD pipeline with
 +---------------------------------------------------------------------------------------------------+
 |                                      Nginx Reverse Proxy                                          |
 +---------------------------------------------------------------------------------------------------+
-         ^
-         |
-         |
-+---------------------------------------------------------------------------------------------------+
-|                                      GitHub Actions CI/CD                                         |
-+---------------------------------------------------------------------------------------------------+
 ```
+
+### Component Details
+
+#### Frontend (Angular 15)
+- **Container Name**: frontend
+- **Port**: 80 (via Nginx)
+- **Key Components**:
+  - Tutorial list component
+  - Tutorial details component
+  - Add tutorial component
+  - Tutorial service for API communication
+
+#### Backend (Node.js & Express)
+- **Container Name**: backend
+- **Port**: 8080
+- **Key Components**:
+  - RESTful API endpoints
+  - MongoDB connection management
+  - Controller logic for CRUD operations
+  - Data models and validation
+
+#### Database (MongoDB)
+- **Container Name**: mongo
+- **Port**: 27017
+- **Database Name**: dd_db
+- **Collection**: tutorials
+
+#### Reverse Proxy (Nginx)
+- **Container Name**: nginx
+- **Port**: 80 -> 8080 (API), 80 (Frontend)
+- **Purpose**: Route traffic between frontend and backend services
 
 ## Local Development Setup
 
@@ -98,6 +131,17 @@ The application is containerized using Docker and includes a CI/CD pipeline with
 - Docker (v20 or higher)
 - Docker Compose (v2 or higher)
 
+### Docker Configuration
+
+The application uses a multi-container setup defined in `docker-compose.yml`:
+
+| Service  | Image                | Description                       | Ports       |
+|----------|----------------------|-----------------------------------|-------------|
+| frontend | Custom Angular build | Serves the Angular frontend       | 80 (internal) |
+| backend  | Custom Node.js build | Provides the RESTful API          | 8080        |
+| mongo    | mongo:latest         | MongoDB database                  | 27017       |
+| nginx    | Custom Nginx config  | Reverse proxy for routing traffic | 80:80       |
+
 ### Using Docker Compose
 
 1. Clone the repository:
@@ -112,6 +156,15 @@ The application is containerized using Docker and includes a CI/CD pipeline with
    ```
 
 3. Access the application at `http://localhost`
+
+### Docker Images
+
+| Image           | Version | Size    | Description                         |
+|-----------------|---------|---------|-------------------------------------|
+| frontend        | latest  | ~25MB   | Angular application                 |
+| backend         | latest  | ~150MB  | Node.js API server                  |
+| mongo           | latest  | ~700MB  | MongoDB database                    |
+| nginx           | latest  | ~20MB   | Nginx reverse proxy                 |
 
 ### Individual Container Setup
 
@@ -129,6 +182,37 @@ docker run -p 8080:8080 --env-file .env mean-crud-app-backend
 cd frontend
 docker build -t mean-crud-app-frontend .
 docker run -p 4200:80 mean-crud-app-frontend
+```
+
+## API Documentation
+
+The backend provides the following RESTful API endpoints:
+
+| Method | Endpoint                | Description                      | Request Body                                                | Response                              |
+|--------|-------------------------|----------------------------------|-------------------------------------------------------------|---------------------------------------|
+| GET    | /api/tutorials          | Get all tutorials               | -                                                           | Array of tutorial objects             |
+| GET    | /api/tutorials/:id      | Get a single tutorial by ID     | -                                                           | Tutorial object                       |
+| GET    | /api/tutorials/published| Get all published tutorials     | -                                                           | Array of published tutorial objects   |
+| POST   | /api/tutorials          | Create a new tutorial           | `{title: string, description: string, published: boolean}`  | Created tutorial object               |
+| PUT    | /api/tutorials/:id      | Update a tutorial               | `{title: string, description: string, published: boolean}`  | Updated tutorial object               |
+| DELETE | /api/tutorials/:id      | Delete a tutorial               | -                                                           | Success message                       |
+| DELETE | /api/tutorials          | Delete all tutorials            | -                                                           | Success message                       |
+
+### Example API Usage
+
+**Creating a tutorial:**
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"title":"Angular Basics","description":"Learn the basics of Angular 15","published":false}' http://localhost:8080/api/tutorials
+```
+
+**Retrieving all tutorials:**
+```bash
+curl http://localhost:8080/api/tutorials
+```
+
+**Updating a tutorial:**
+```bash
+curl -X PUT -H "Content-Type: application/json" -d '{"title":"Angular Basics","description":"Learn the basics of Angular 15","published":true}' http://localhost:8080/api/tutorials/60c72b2f7c213e0012345678
 ```
 
 ## CI/CD Pipeline Setup
@@ -226,35 +310,86 @@ The CI/CD workflow consists of three main stages:
    - Verify MongoDB connection
    - Check for server errors in the logs
 
+## Documentation & Screenshots
+
+### Project Documentation
+
+Documentation for this project is organized as follows:
+
+| Directory                    | Description                                             |
+|------------------------------|---------------------------------------------------------|
+| `/screenshots/docker/`       | Docker configuration and container evidence             |
+| `/screenshots/backend/`      | Backend API functionality and database connection       |
+| `/screenshots/frontend/`     | Frontend UI and interaction with backend               |
+| `/screenshots/nginx/`        | Nginx configuration and routing evidence                |
+
+### Screenshots
+
+#### Docker Configuration
+![Docker Containers](screenshots/docker/containers.png)
+*Screenshot showing all running Docker containers*
+
+![Docker Images](screenshots/docker/images.png)
+*Screenshot showing all Docker images*
+
+#### Backend API
+![Backend API Response](screenshots/backend/api_response.png)
+*Screenshot showing successful API response*
+
+![Database Connection](screenshots/backend/db_connection.png)
+*Screenshot showing successful MongoDB connection*
+
+#### Frontend Application
+![Tutorials List](screenshots/frontend/tutorials_list.png)
+*Screenshot showing the tutorials list page*
+
+![Add Tutorial](screenshots/frontend/add_tutorial.png)
+*Screenshot showing the add tutorial form*
+
+![Edit Tutorial](screenshots/frontend/edit_tutorial.png)
+*Screenshot showing the edit tutorial form*
+
+#### Nginx Configuration
+![Nginx Configuration](screenshots/nginx/nginx_config.png)
+*Screenshot showing Nginx configuration for routing*
+
+## Testing the Application
+
+1. **Create a Tutorial**:
+   - Navigate to http://localhost
+   - Click on "Add" button
+   - Fill in the title and description
+   - Click "Submit"
+
+2. **View Tutorials**:
+   - Navigate to http://localhost
+   - All tutorials will be displayed in a list
+
+3. **Edit a Tutorial**:
+   - Click on a tutorial from the list
+   - Modify the details
+   - Click "Update"
+
+4. **Delete a Tutorial**:
+   - Click on a tutorial from the list
+   - Click "Delete"
+
+5. **Publish a Tutorial**:
+   - Click on a tutorial from the list
+   - Click the "Publish" button
+   - The tutorial status will change to "Published"
+
+## Project Improvements
+
+Future improvements for this project could include:
+
+1. Adding user authentication and authorization
+2. Implementing pagination for the tutorials list
+3. Adding categories or tags for tutorials
+4. Implementing full-text search
+5. Adding unit and integration tests
+6. Implementing a more robust error handling system
+
 ## License
 
 [MIT](LICENSE)
-
-In this DevOps task, you need to build and deploy a full-stack CRUD application using the MEAN stack (MongoDB, Express, Angular 15, and Node.js). The backend will be developed with Node.js and Express to provide REST APIs, connecting to a MongoDB database. The frontend will be an Angular application utilizing HTTPClient for communication.  
-
-The application will manage a collection of tutorials, where each tutorial includes an ID, title, description, and published status. Users will be able to create, retrieve, update, and delete tutorials. Additionally, a search box will allow users to find tutorials by title.
-
-## Project setup
-
-### Node.js Server
-
-cd backend
-
-npm install
-
-You can update the MongoDB credentials by modifying the `db.config.js` file located in `app/config/`.
-
-Run `node server.js`
-
-### Angular Client
-
-cd frontend
-
-npm install
-
-Run `ng serve --port 8081`
-
-You can modify the `src/app/services/tutorial.service.ts` file to adjust how the frontend interacts with the backend.
-
-Navigate to `http://localhost:8081/`
-# MEAN-Stack-Application

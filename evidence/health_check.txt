@@ -1,0 +1,8 @@
+=== Health Check Report ===
+200200
+
+Container Health:
+nginx: Up 4 minutes
+frontend: Up 4 minutes
+backend: Up 4 minutes
+mongo: Up 4 minutes

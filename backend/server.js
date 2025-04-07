@@ -1,7 +1,14 @@
 const express = require("express");
-//const cors = require("cors");
+const cors = require("cors");
 
 const app = express();
+
+// Configure CORS
+app.use(cors({
+  origin: ["http://localhost:4200", "http://localhost:80", "http://localhost"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -29,6 +36,11 @@ app.get("/", (req, res) => {
 });
 
 require("./app/routes/turorial.routes")(app);
+
+// Handle 404 errors - any invalid routes
+app.use((req, res, next) => {
+  res.status(404).json({ message: "Route not found" });
+});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

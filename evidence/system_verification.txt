@@ -1,0 +1,23 @@
+=== System Status ===
+Tue Apr  8 00:20:25 IST 2025
+
+=== Docker Containers ===
+CONTAINER ID   IMAGE                            COMMAND                  CREATED          STATUS          PORTS                      NAMES
+93dc85f56596   nginx:alpine                     "/docker-entrypoint.…"   31 minutes ago   Up 31 minutes   0.0.0.0:80->80/tcp         nginx
+2a1e5139105e   crud-dd-task-mean-app-frontend   "/docker-entrypoint.…"   31 minutes ago   Up 31 minutes   0.0.0.0:4200->80/tcp       frontend
+de6444500735   crud-dd-task-mean-app-backend    "docker-entrypoint.s…"   31 minutes ago   Up 5 minutes    0.0.0.0:8080->8080/tcp     backend
+1eaf2cd3abb7   mongo:6.0                        "docker-entrypoint.s…"   31 minutes ago   Up 31 minutes   0.0.0.0:27017->27017/tcp   mongo
+
+=== API Test ===
+{"title":"Documentation Test","description":"Testing for assessment documentation","published":false,"createdAt":"2025-04-07T18:50:25.896Z","updatedAt":"2025-04-07T18:50:25.896Z","id":"67f41e71b348b98bbd926dea"}
+=== Frontend Access ===
+HTTP/1.1 200 OK
+Server: nginx/1.27.4
+Date: Mon, 07 Apr 2025 18:50:25 GMT
+Content-Type: text/html
+Content-Length: 2061
+Connection: keep-alive
+Last-Modified: Mon, 07 Apr 2025 18:19:19 GMT
+ETag: "67f41727-80d"
+Accept-Ranges: bytes
+

@@ -1,0 +1,14 @@
+=== Evidence Files Verification ===
+
+Docker Containers:
+NAMES      STATUS              PORTS
+nginx      Up About a minute   0.0.0.0:80->80/tcp
+frontend   Up About a minute   0.0.0.0:4200->80/tcp
+backend    Up About a minute   0.0.0.0:8080->8080/tcp
+mongo      Up About a minute   0.0.0.0:27017->27017/tcp
+
+
+API Response:
+[{"title":"Test Tutorial","description":"Testing the API","published":false,"createdAt":"2025-04-07T18:45:50.887Z","updatedAt":"2025-04-07T18:45:50.887Z","id":"67f41d5eb348b98bbd926de3"},{"title":"Test Tutorial 1","description":"First test tutorial","published":false,"createdAt":"2025-04-07T18:47:39.575Z","updatedAt":"2025-04-07T18:47:39.575Z","id":"67f41dcbb348b98bbd926de6"},{"title":"Documentation Test","description":"Testing for assessment documentation","published":false,"createdAt":"2025-04-07T18:50:25.896Z","updatedAt":"2025-04-07T18:50:25.896Z","id":"67f41e71b348b98bbd926dea"},{"title":"Assessment Demo","description":"Testing for documentation","published":false,"createdAt":"2025-04-07T18:51:27.017Z","updatedAt":"2025-04-07T18:51:27.017Z","id":"67f41eaf16c5fcf6d8ccd8ed"}]
+
+Nginx Config:

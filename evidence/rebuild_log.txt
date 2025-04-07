@@ -1,0 +1,80 @@
+=== Rebuilding Frontend ===
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 742B done
+#1 WARN: FromAsCasing: 'as' and 'FROM' keywords' casing do not match (line 2)
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/nginx:alpine
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:18
+#3 ...
+
+#4 [auth] library/node:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:18
+#3 DONE 2.6s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [build 1/6] FROM docker.io/library/node:18@sha256:3c56248510700ddb4861bd478ea2ced828793fd5388a21adc5270cdbbf7b7919
+#6 DONE 0.0s
+
+#7 [stage-1 1/2] FROM docker.io/library/nginx:alpine
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 4.42kB done
+#8 DONE 0.0s
+
+#9 [build 6/6] RUN npm run build
+#9 CACHED
+
+#10 [build 4/6] RUN npm install
+#10 CACHED
+
+#11 [build 3/6] COPY package.json package-lock.json ./
+#11 CACHED
+
+#12 [build 2/6] WORKDIR /app
+#12 CACHED
+
+#13 [build 5/6] COPY . .
+#13 CACHED
+
+#14 [stage-1 2/2] COPY --from=build /app/dist/angular-15-crud /usr/share/nginx/html
+#14 CACHED
+
+#15 exporting to image
+#15 exporting layers done
+#15 writing image sha256:620592adeb8b37dcb79a138f45d3440bc69df61b8128cd1acf28f005ae6d2938 done
+#15 naming to docker.io/library/mean-app-frontend done
+#15 DONE 0.0s
+
+ [33m1 warning found (use docker --debug to expand):
+[0m - FromAsCasing: 'as' and 'FROM' keywords' casing do not match (line 2)
+
+=== Updating Docker Compose ===
+
+=== Container Status ===
+CONTAINER ID   IMAGE                            COMMAND                  CREATED                  STATUS                  PORTS                      NAMES
+a31e6a2d2974   nginx:alpine                     "/docker-entrypoint.…"   Less than a second ago   Up Less than a second   0.0.0.0:80->80/tcp         nginx
+b084b47c4c16   crud-dd-task-mean-app-frontend   "/docker-entrypoint.…"   Less than a second ago   Up Less than a second   0.0.0.0:4200->80/tcp       frontend
+e90c421cd410   crud-dd-task-mean-app-backend    "docker-entrypoint.s…"   1 second ago             Up Less than a second   0.0.0.0:8080->8080/tcp     backend
+e7a6176f61de   mongo:6.0                        "docker-entrypoint.s…"   1 second ago             Up Less than a second   0.0.0.0:27017->27017/tcp   mongo
+
+=== Service Health Check ===
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 591
+ETag: W/"24f-iCR8mCfV9rGawMhWo4C2r46yK8M"
+Date: Mon, 07 Apr 2025 18:51:08 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
